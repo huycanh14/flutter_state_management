@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_state_management/count/count_view.dart';
+
+import 'stream/count_state.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -30,8 +33,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  CountState countState = CountState();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    countState.counterStream.listen((event) {
+      print(event.toString());
+    });
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -48,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
+        onPressed: () => countState.increment(),
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
